@@ -12,6 +12,6 @@ pandas
 numpy
 pillow
 pyparsing
-opencv-python
 urllib3
 requests
+opencv-python
