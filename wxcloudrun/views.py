@@ -3,7 +3,6 @@ from flask import render_template, request
 from run import app
 from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter, update_counterbyid
 from wxcloudrun.model import Counters
-from wxcloudrun.ocrengin import get_ocr_engins
 from wxcloudrun.response import make_succ_empty_response, make_succ_response, make_err_response
 
 
@@ -68,4 +67,4 @@ def get_count():
 
 @app.route('/api/get_engins',methods=['GET'])
 def get_engins():
-    return get_ocr_engins()
+    return "hello world"
