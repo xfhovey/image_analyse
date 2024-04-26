@@ -106,7 +106,9 @@ def work():
         replyMsg = reply.TextMsg(toUser, fromUser, reply_content)
 
     elif isinstance(recMsg, ImageMsg):
-        image_dir = os.path.join(os.getcwd(), 'image')
+        current_file_path = os.path.abspath(__file__)
+        current_dir_path = os.path.dirname(current_file_path)
+        image_dir = os.path.join(current_dir_path, 'image')
         image_path = weixin.get_image(recMsg, image_dir)
         analyser = ImageAnalyser(beta=-50, thresh=100)
         correct_num, wrong_num = analyser.analyse(image_path)
