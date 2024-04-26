@@ -5,7 +5,7 @@ import config
 
 # 因MySQLDB不支持Python3，使用pymysql扩展库代替MySQLDB库
 from wxcloudrun.mylog import Mylog
-from wxcloudrun.weixin import WeixinAdaptor
+from wxcloudrun.weixin_adaptor import WeixinAdaptor
 
 pymysql.install_as_MySQLdb()
 
