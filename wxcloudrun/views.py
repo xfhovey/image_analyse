@@ -72,9 +72,9 @@ def get_count():
     return make_succ_response(0) if counter is None else make_succ_response(counter.count)
 
 
-@app.route('/index')
-def hello_world():
-    return 'Hello World!'
+# @app.route('/index')
+# def hello_world():
+#     return 'Hello World!'
 
 #
 # @app.route('/wx', methods=['GET'])
