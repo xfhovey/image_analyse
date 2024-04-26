@@ -85,15 +85,17 @@ def validate():
     nonce = request.args['nonce']
     return weixin.validate(signature, echostr, timestamp, nonce)
 
+
 @app.route('/wx', methods=['POST'])
 def work():
     webData = request.data
     recMsg = ReceiveMsg.parse_xml(webData)
-    toUser = recMsg.FromUserName
-    fromUser = recMsg.ToUserName
     if recMsg is None:
         return ''
-    elif isinstance(recMsg, TextMsg):
+
+    toUser = recMsg.FromUserName
+    fromUser = recMsg.ToUserName
+    if isinstance(recMsg, TextMsg):
         content = recMsg.Content
         reply_content = f'回复:{content}'
         replyMsg = reply.TextMsg(toUser, fromUser, reply_content)
@@ -117,4 +119,3 @@ def work():
         replyMsg = reply.TextMsg(toUser, fromUser, "无法识别的消息")
 
     return replyMsg.send()
-
