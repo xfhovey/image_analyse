@@ -1,11 +1,14 @@
+import os
 from datetime import datetime
 
 from flask import render_template, request
 
 from run import app
-from wxcloudrun import weixin
+from wxcloudrun import weixin, reply
+from wxcloudrun.ImageAnalyser import ImageAnalyser
 from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter, update_counterbyid
 from wxcloudrun.model import Counters
+from wxcloudrun.receive import ReceiveMsg, TextMsg, ImageMsg
 from wxcloudrun.response import make_succ_empty_response, make_succ_response, make_err_response
 
 
@@ -82,36 +85,35 @@ def validate():
     nonce = request.args['nonce']
     return weixin.validate(signature, echostr, timestamp, nonce)
 
-#
-# @app.route('/wx', methods=['POST'])
-# def work():
-#     webData = request.data
-#
-#     recMsg = ReceiveMsg.parse_xml(webData)
-#     toUser = recMsg.FromUserName
-#     fromUser = recMsg.ToUserName
-#
-#     if isinstance(recMsg, TextMsg):
-#         content = recMsg.Content
-#         reply_content = f'回复:{content}'
-#         replyMsg = reply.TextMsg(toUser, fromUser, reply_content)
-#
-#     elif isinstance(recMsg, ImageMsg):
-#         image_dir = os.path.join(os.getcwd(), 'image')
-#         image_path = weixin.get_image(recMsg, image_dir)
-#         analyser = ImageAnalyser(beta=-50, thresh=100)
-#         correct_num, wrong_num = analyser.analyse(image_path)
-#         text = f'正确{correct_num}道，错误{wrong_num}道'
-#         txtMsg = reply.TextMsg(toUser, fromUser, text)
-#         weixin.send_msg(txtMsg)
-#
-#         file_root, file_extension = os.path.splitext(image_path)
-#         analysed_path = f"{file_root}_analysed{file_extension}"
-#         analyser.to_path(analysed_path)
-#         mediaId = weixin.upload_image(analysed_path)
-#         replyMsg = reply.ImageMsg(toUser, fromUser, mediaId)
-#
-#     else:
-#         replyMsg = reply.TextMsg(toUser, fromUser, "无法识别的消息")
-#
-#     return replyMsg.send()
+@app.route('/wx', methods=['POST'])
+def work():
+    webData = request.data
+
+    recMsg = ReceiveMsg.parse_xml(webData)
+    toUser = recMsg.FromUserName
+    fromUser = recMsg.ToUserName
+
+    if isinstance(recMsg, TextMsg):
+        content = recMsg.Content
+        reply_content = f'回复:{content}'
+        replyMsg = reply.TextMsg(toUser, fromUser, reply_content)
+
+    elif isinstance(recMsg, ImageMsg):
+        image_dir = os.path.join(os.getcwd(), 'image')
+        image_path = weixin.get_image(recMsg, image_dir)
+        analyser = ImageAnalyser(beta=-50, thresh=100)
+        correct_num, wrong_num = analyser.analyse(image_path)
+        text = f'正确{correct_num}道，错误{wrong_num}道'
+        txtMsg = reply.TextMsg(toUser, fromUser, text)
+        weixin.send_msg(txtMsg)
+
+        file_root, file_extension = os.path.splitext(image_path)
+        analysed_path = f"{file_root}_analysed{file_extension}"
+        analyser.to_path(analysed_path)
+        mediaId = weixin.upload_image(analysed_path)
+        replyMsg = reply.ImageMsg(toUser, fromUser, mediaId)
+
+    else:
+        replyMsg = reply.TextMsg(toUser, fromUser, "无法识别的消息")
+
+    return replyMsg.send()
