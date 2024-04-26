@@ -65,6 +65,3 @@ def get_count():
     counter = Counters.query.filter(Counters.id == 1).first()
     return make_succ_response(0) if counter is None else make_succ_response(counter.count)
 
-@app.route('/api/get_engins',methods=['GET'])
-def get_engins():
-    return "hello world"
