@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import render_template, request
 
 from run import app
-from wxcloudrun import weixin, reply, logger
+from wxcloudrun import weixin, reply
 from wxcloudrun.ImageAnalyser import ImageAnalyser
 from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter, update_counterbyid
 from wxcloudrun.model import Counters
@@ -88,12 +88,12 @@ def validate():
 @app.route('/wx', methods=['POST'])
 def work():
     webData = request.data
-    logger.info(f'webData====>{webData}')
     recMsg = ReceiveMsg.parse_xml(webData)
     toUser = recMsg.FromUserName
     fromUser = recMsg.ToUserName
-
-    if isinstance(recMsg, TextMsg):
+    if recMsg is None:
+        return ''
+    elif isinstance(recMsg, TextMsg):
         content = recMsg.Content
         reply_content = f'回复:{content}'
         replyMsg = reply.TextMsg(toUser, fromUser, reply_content)
@@ -117,3 +117,4 @@ def work():
         replyMsg = reply.TextMsg(toUser, fromUser, "无法识别的消息")
 
     return replyMsg.send()
+

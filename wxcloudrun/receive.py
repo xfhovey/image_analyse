@@ -16,10 +16,11 @@ class ReceiveMsg(object):
         if len(web_data) == 0:
             return None
         xmlData = ET.fromstring(web_data)
-        msg_type = xmlData.find('MsgType').text
-        if msg_type == 'text':
+
+        msg_type = xmlData.find('MsgType')
+        if msg_type is not None and msg_type.text == 'text':
             return TextMsg(xmlData)
-        elif msg_type == 'image':
+        elif msg_type is not None and msg_type.text == 'image':
             return ImageMsg(xmlData)
         else:
             return None
