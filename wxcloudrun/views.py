@@ -3,6 +3,7 @@ from datetime import datetime
 from flask import render_template, request
 
 from run import app
+from wxcloudrun import weixin
 from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter, update_counterbyid
 from wxcloudrun.model import Counters
 from wxcloudrun.response import make_succ_empty_response, make_succ_response, make_err_response
@@ -68,19 +69,19 @@ def get_count():
     return make_succ_response(0) if counter is None else make_succ_response(counter.count)
 
 
-# @app.route('/index')
-# def hello_world():
-#     return 'Hello World!'
+@app.route('/index')
+def hello_world():
+    return 'Hello World!'
 
-#
-# @app.route('/wx', methods=['GET'])
-# def validate():
-#     signature = request.args['signature']
-#     echostr = request.args['echostr']
-#     timestamp = request.args['timestamp']
-#     nonce = request.args['nonce']
-#     return weixin.validate(signature, echostr, timestamp, nonce)
-#
+
+@app.route('/wx', methods=['GET'])
+def validate():
+    signature = request.args['signature']
+    echostr = request.args['echostr']
+    timestamp = request.args['timestamp']
+    nonce = request.args['nonce']
+    return weixin.validate(signature, echostr, timestamp, nonce)
+
 #
 # @app.route('/wx', methods=['POST'])
 # def work():
