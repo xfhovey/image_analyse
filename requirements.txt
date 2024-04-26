@@ -12,3 +12,4 @@ pillow
 pyparsing
 urllib3
 requests
+pandas
