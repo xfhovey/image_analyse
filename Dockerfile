@@ -18,7 +18,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     libxml2 libxml2-dev libxslt libxslt-dev \
     libjpeg-turbo-dev zlib-dev libpq postgresql-dev \
     build-base cmake linux-headers jpeg-dev zlib-dev libjpeg-turbo-dev libpng-dev \
-    tiff-dev libwebp-dev openblas-dev libffi-dev ffmpeg-dev opencv-python-headless \
+    tiff-dev libwebp-dev openblas-dev libffi-dev ffmpeg-dev \
 && rm -rf /var/cache/apk/*
 
 # 拷贝当前项目到/app目录下（.dockerignore中文件除外）
