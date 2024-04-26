@@ -14,8 +14,9 @@ RUN apk add ca-certificates
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
 # 安装python3
 && apk add --update --no-cache python3 py3-pip \
-    python3-dev gcc gfortran musl-dev g++ libffi-dev openssl-dev libxml2 libxml2-dev libxslt libxslt-dev \  # 支持pandas
-    libjpeg-turbo-dev zlib-dev libpq postgresql-dev \       # 支持pandas
+    python3-dev gcc gfortran musl-dev g++ libffi-dev openssl-dev \
+    libxml2 libxml2-dev libxslt libxslt-dev \
+    libjpeg-turbo-dev zlib-dev libpq postgresql-dev \
     build-base cmake linux-headers jpeg-dev zlib-dev libjpeg-turbo-dev libpng-dev \
     tiff-dev libwebp-dev openblas-dev libffi-dev ffmpeg-dev opencv-python-headless \
 && rm -rf /var/cache/apk/*
