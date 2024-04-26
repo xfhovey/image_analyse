@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from pyparsing import *
 
-from ocrengin import get_ocr_engins
+from wxcloudrun.ocrengin import get_ocr_engins
 
 COLOR_BLUE = (255, 0, 0)
 COLOR_GREEN = (0, 255, 0)
