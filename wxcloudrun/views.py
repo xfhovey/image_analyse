@@ -48,7 +48,7 @@ def count():
             insert_counter(counter)
         else:
             counter.id = 1
-            counter.count += 1
+            counter.count += 2
             counter.updated_at = datetime.now()
             update_counterbyid(counter)
         return make_succ_response(counter.count)
@@ -72,9 +72,9 @@ def get_count():
     return make_succ_response(0) if counter is None else make_succ_response(counter.count)
 
 
-# @app.route('/index')
-# def hello_world():
-#     return 'Hello World!'
+@app.route('/index')
+def hello_world():
+    return 'Hello World!'
 
 #
 # @app.route('/wx', methods=['GET'])

@@ -25,5 +25,5 @@ from wxcloudrun import views
 
 # 加载配置
 app.config.from_object('config')
-logger = Mylog()
-weixin = WeixinAdaptor(logger)
+# logger = Mylog()
+# weixin = WeixinAdaptor(logger)
