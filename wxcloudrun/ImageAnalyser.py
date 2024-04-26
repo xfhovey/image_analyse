@@ -17,7 +17,7 @@ def draw_text(image, x, y, text, color=COLOR_RED):
     pilimg = Image.fromarray(image)
     draw = ImageDraw.Draw(pilimg)
     # 参数1：字体文件路径，参数2：字体大小
-    font = ImageFont.truetype("simhei.ttf", 30, encoding="utf-8")
+    font = ImageFont.truetype("/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc", 30)
     # 参数1：打印坐标，参数2：文本，参数3：字体颜色，参数4：字体
     draw.text((x, y - 10), text, color, font=font)
     return cv2.cvtColor(np.array(pilimg), cv2.COLOR_RGB2BGR)
