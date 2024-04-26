@@ -1,24 +1,17 @@
 # 二开推荐阅读[如何提高项目构建效率](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/scene/build/speed.html)
 # 选择基础镜像。如需更换，请到[dockerhub官方仓库](https://hub.docker.com/_/python?tab=tags)自行选择后替换。
 # 已知alpine镜像与pytorch有兼容性问题会导致构建失败，如需使用pytorch请务必按需更换基础镜像。
-FROM python:3.8-alpine
+FROM python:3.8
 
 # 容器默认时区为UTC，如需使用上海时间请启用以下时区设置命令
 # RUN apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo Asia/Shanghai > /etc/timezone
 
 # 使用 HTTPS 协议访问容器云调用证书安装
-RUN apk add ca-certificates
+# RUN apk add ca-certificates
 
 # 安装依赖包，如需其他依赖包，请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找。
 # 选用国内镜像源以提高下载速度
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories
-
-# 安装依赖包
-RUN apk add --update --no-cache ca-certificates python3-dev gcc gfortran musl-dev g++ libffi-dev openssl-dev \
-    libxml2 libxml2-dev libxslt libxslt-dev libjpeg-turbo-dev zlib-dev libpq postgresql-dev \
-    build-base cmake linux-headers jpeg-dev zlib-dev libjpeg-turbo-dev libpng-dev tiff-dev \
-    libwebp-dev openblas-dev libffi-dev ffmpeg-dev \
-&& rm -rf /var/cache/apk/*
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories
 
 # 拷贝当前项目到/app目录下（.dockerignore中文件除外）
 COPY . /app
@@ -30,9 +23,6 @@ WORKDIR /app
 # 选用国内镜像源以提高下载速度
 RUN pip config set global.index-url http://mirrors.cloud.tencent.com/pypi/simple \
 && pip config set global.trusted-host mirrors.cloud.tencent.com
-
-# 安装预编译的 wheels
-RUN pip install --no-cache-dir numpy pandas opencv-python
 
 # 安装其他依赖
 RUN pip install --no-cache-dir -r requirements.txt
