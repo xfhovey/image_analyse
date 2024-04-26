@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import render_template, request
 
 from run import app
-from wxcloudrun import weixin, reply
+from wxcloudrun import weixin, reply, logger
 from wxcloudrun.ImageAnalyser import ImageAnalyser
 from wxcloudrun.dao import delete_counterbyid, query_counterbyid, insert_counter, update_counterbyid
 from wxcloudrun.model import Counters
@@ -88,7 +88,7 @@ def validate():
 @app.route('/wx', methods=['POST'])
 def work():
     webData = request.data
-
+    logger.info(f'webData====>{webData}')
     recMsg = ReceiveMsg.parse_xml(webData)
     toUser = recMsg.FromUserName
     fromUser = recMsg.ToUserName
