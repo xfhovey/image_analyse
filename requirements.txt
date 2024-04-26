@@ -14,4 +14,3 @@ pillow
 pyparsing
 urllib3
 requests
-opencv-python
