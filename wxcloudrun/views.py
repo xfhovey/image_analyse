@@ -15,6 +15,7 @@ from wxcloudrun.weixin_adaptor import WeixinAdaptor
 
 logger = Mylog()
 weixin = WeixinAdaptor(logger)
+analyser = ImageAnalyser(beta=-50, thresh=100)
 
 
 @app.route('/')
@@ -102,6 +103,7 @@ def work():
     fromUser = recMsg.ToUserName
     if isinstance(recMsg, TextMsg):
         content = recMsg.Content
+
         reply_content = f'回复:{content}'
         replyMsg = reply.TextMsg(toUser, fromUser, reply_content)
 
@@ -110,7 +112,7 @@ def work():
         current_dir_path = os.path.dirname(current_file_path)
         image_dir = os.path.join(current_dir_path, 'image')
         image_path = weixin.get_image(recMsg, image_dir)
-        analyser = ImageAnalyser(beta=-50, thresh=100)
+
         correct_num, wrong_num = analyser.analyse(image_path)
         text = f'正确{correct_num}道，错误{wrong_num}道'
         txtMsg = reply.TextMsg(toUser, fromUser, text)

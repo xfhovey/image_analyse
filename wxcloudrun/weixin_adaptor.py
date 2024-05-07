@@ -28,8 +28,8 @@ def HttpRequest(resp_func, logger=None):
 
 class WeixinAdaptor:
     def __init__(self, logger=None):
-        self.appid = 'wxd8150c294734a1d1'  # 'wx2ff607a6d3522e27'
-        self.app_secret = '6198d462c3c09ae6f21c73b6eb093f77'  # 'af53e3a54f64bced04453d11af24b982'
+        self.appid = 'wx2ff607a6d3522e27' #'wxd8150c294734a1d1'
+        self.app_secret = 'af53e3a54f64bced04453d11af24b982' # '6198d462c3c09ae6f21c73b6eb093f77'
         self.token = '1234567890'
         self._access_token = None
         self._access_token_period = None
