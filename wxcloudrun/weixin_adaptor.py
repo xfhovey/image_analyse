@@ -72,7 +72,7 @@ class WeixinAdaptor:
             'appid': self.appid,
             'secret': self.app_secret,
         }
-        response = requests.get(url, params=params)
+        response = requests.get(url, params=params, verify=False)
         return response
 
     def get_image(self, imageMsg, local_dir):
